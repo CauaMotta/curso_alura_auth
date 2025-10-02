@@ -18,6 +18,12 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: [true, 'O campo `password` é obrigatório.'],
     trim: true
+  },
+  role: {
+    type: String,
+    required: [true, 'O campo `role` é obrigatório.'],
+    uppercase: true,
+    trim: true
   }
 })
 

@@ -12,10 +12,11 @@ async function auth(req, res, next) {
   try {
     jwt.verify(accessToken, secret)
 
-    const { id, email } = await jwt.decode(accessToken)
+    const { id, email, role } = await jwt.decode(accessToken)
 
     req.userId = id
     req.userEmail = email
+    req.userRole = role
 
     return next()
   } catch (err) {

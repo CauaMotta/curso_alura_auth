@@ -12,7 +12,7 @@ class UserService extends Service {
   }
 
   async createNew(entity) {
-    const { name, email, password } = entity
+    const { name, email, password, role } = entity
 
     const verifyEmail = await user.findOne({ email })
     if (verifyEmail) {
@@ -24,7 +24,12 @@ class UserService extends Service {
 
     const codifyPassword = await hash(password, salt)
 
-    const newUser = await user.create({ name, email, password: codifyPassword })
+    const newUser = await user.create({
+      name,
+      email,
+      password: codifyPassword,
+      role
+    })
     return newUser
   }
 
@@ -48,7 +53,8 @@ class UserService extends Service {
     const accessToken = jwt.sign(
       {
         id: foundUser.id,
-        email: foundUser.email
+        email: foundUser.email,
+        role: foundUser.role
       },
       secret,
       {
